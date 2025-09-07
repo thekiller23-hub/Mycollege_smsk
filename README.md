@@ -10,7 +10,9 @@
   <header>
   <nav>
     <img src="/storage/emulated/O/Pictures/Screenshots/IMG_20250727_152905.jpg">
-    <a href="#">home</a> <a href="#">ContactUS</a><a href="#">Projects
+    <a href="#">home</a>
+    <a href="#">ContactUS</a>
+    <a href="#">Projects
   </nav>
     <main>
       <section>
