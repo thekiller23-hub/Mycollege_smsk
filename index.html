@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Blockchain Certification Verification</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+   <style  src="man.js"></style>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-certificate"></i> Advanced Certification Verification</h1>
+                <p>Enterprise-grade certificate validation using blockchain technology</p>
+            </div>
+            <div class="network-status" id="networkStatus">
+                <span class="status-dot"></span>
+                <span>Blockchain Network</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="verification-section">
+                <h2><i class="fas fa-search"></i> Certificate Verification</h2>
+                <div class="verification-method">
+                    <button class="tab-btn active" onclick="openTab('hashTab')"><i class="fas fa-fingerprint"></i> By Hash</button>
+                    <button class="tab-btn" onclick="openTab('documentTab')"><i class="fas fa-file-upload"></i> By Document</button>
+                    <button class="tab-btn" onclick="openTab("qrTab")"><i class="fas fa-qrcode"></i> QR Code</button>
+                </div>
+
+                <div id="hashTab" class="tab-content active">
+                    <div class="input-group">
+                        <input type="text" id="certificateHash" placeholder="Enter certificate hash or transaction ID">
+                        <button onclick="verifyByHash()"><i class="fas fa-check-circle"></i> Verify</button>
+                    </div>
+                </div>
+
+                <div id="documentTab" class="tab-content">
+                    <div class="input-group">
+                        <div class="file-upload">
+                            <label for="certificateFile">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Choose Certificate File</span>
+                                <input type="file" id="certificateFile" accept=".pdf,.jpg,.jpeg,.png">
+                            </label>
+                            <div id="fileName"></div>
+                        </div>
+                        <select id="institutionSelect">
+                            <option value="">Select Issuing Institution</option>
+                        </select>
+                        <button onclick="verifyByDocument()"><i class="fas fa-file-signature"></i> Verify Document</button>
+                    </div>
+                    <div class="document-preview" id="documentPreview"></div>
+                </div>
+
+                <div id="qrTab" class="tab-content">
+                    <div class="qr-section">
+                        <div class="qr-reader" id="qrReader">
+                            <video id="qrVideo" width="100%" height="auto"></video>
+                            <canvas id="qrCanvas" style="display: none;"></canvas>
+                        </div>
+                        <button onclick="stopQRScanner()" class="stop-btn"><i class="fas fa-stop-circle"></i> Stop Scanner</button>
+                    </div>
+                </div>
+
+                <div id="verificationResult"></div>
+                <div id="verificationDetails" class="verification-details"></div>
+            </div>
+
+            <div class="blockchain-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-link"></i> Blockchain Explorer</h2>
+                    <div class="blockchain-controls">
+                        <button onclick="refreshBlockchain()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                        <input type="text" id="blockSearch" placeholder="Search block...">
+                    </div>
+                </div>
+                <div class="blockchain-view" id="blockchainView"></div>
+                <div class="block-details" id="blockDetails"></div>
+            </div>
+
+            <div class="admin-section">
+                <h2><i class="fas fa-user-shield"></i> Certificate Management</h2>
+                <div class="admin-tabs">
+                    <button class="admin-tab-btn active" onclick="openAdminTab('issueTab')">Issue Certificate</button>
+                    <button class="admin-tab-btn" onclick="openAdminTab('revokeTab')">Revoke Certificate</button>
+                    <button class="admin-tab-btn" onclick="openAdminTab('institutionTab')">Institution Settings</button>
+                </div>
+
+                <div id="issueTab" class="admin-tab-content active">
+                    <div class="input-group">
+                        <input type="text" id="studentName" placeholder="Student Full Name">
+                        <input type="text" id="studentId" placeholder="Student ID">
+                        <input type="text" id="courseName" placeholder="Course/Program Name">
+                        <input type="date" id="issueDate">
+                        <input type="date" id="expiryDate" placeholder="Expiry Date (optional)">
+                        <select id="institution">
+                            <option value="">Select Institution</option>
+                        </select>
+                        <div class="file-upload">
+                            <label for="certificateDocument">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Upload Certificate Document</span>
+                                <input type="file" id="certificateDocument" accept=".pdf,.jpg,.jpeg,.png">
+                            </label>
+                            <div id="adminFileName"></div>
+                        </div>
+                        <button onclick="issueCertificate()"><i class="fas fa-plus-circle"></i> Issue Certificate</button>
+                    </div>
+                </div>
+
+                <div id="revokeTab" class="admin-tab-content">
+                    <div class="input-group">
+                        <input type="text" id="revokeHash" placeholder="Enter certificate hash to revoke">
+                        <textarea id="revokeReason" placeholder="Reason for revocation"></textarea>
+                        <button onclick="revokeCertificate()"><i class="fas fa-minus-circle"></i> Revoke Certificate</button>
+                    </div>
+                    <div class="revoked-list" id="revokedList"></div>
+                </div>
+
+                <div id="institutionTab" class="admin-tab-content">
+                    <div class="input-group">
+                        <h3>Register New Institution</h3>
+                        <input type="text" id="institutionName" placeholder="Institution Name">
+                        <input type="text" id="institutionDomain" placeholder="Official Domain">
+                        <input type="text" id="institutionWallet" placeholder="Blockchain Wallet Address">
+                        <button onclick="registerInstitution()"><i class="fas fa-building"></i> Register Institution</button>
+                    </div>
+                </div>
+
+                <div id="issueResult"></div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About</h3>
+                    <p>Enterprise blockchain certification verification system</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Technology</h3>
+                    <ul>
+                        <li>Blockchain</li>
+                        <li>Cryptographic Hashing</li>
+                        <li>Smart Contracts</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-linkedin"></i>
+                        <i class="fab fa-github"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Advanced Certification Verification System. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Include the QR scanner library -->
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="script.js"></script>
+    <script src="smartcontract.js"></script>
+</body>
+</html>
